@@ -6,28 +6,24 @@
 package com.restaurante.java.view;
 
 
+import com.restaurante.java.controller.Principal;
 import com.restaurante.java.model.Mesa;
-import com.restaurante.java.model.Prato;
+import com.restaurante.java.model.enums.EstadoMesa;
 import com.restaurante.java.util.ButtonMesa;
 import static com.restaurante.java.util.ButtonMesa.parseId;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.HPos;
-import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 public class TelaPrincipal {
@@ -38,32 +34,19 @@ public class TelaPrincipal {
     private static Stage stage;
     private static Scene scene;
     
-    private Mesa mesas [];
+    //private Mesa mesas [];
     private ButtonMesa[] botoesMesas;
     
     @FXML
     void initialize (){
-        //ler o as mesas
-        //retorno do banco
-        mesas = new Mesa[3];
-        mesas[0]= new Mesa();
-        mesas[0].setCod_mesa(001);
-        mesas[0].setEstado('L');
-        mesas[1]= new Mesa();
-        mesas[1].setCod_mesa(002); 
-        mesas[1].setEstado('L');
-        mesas[2]= new Mesa();
-        mesas[2].setCod_mesa(003); 
-        mesas[2].setEstado('L');
-        
-        botoesMesas= new ButtonMesa[3];
-        
-        
-        int qtdMesas = 3; // tamanho do vetor
+        Principal p = new Principal();
+        List<Mesa> mesas= p.listarTodos();
+        botoesMesas= new ButtonMesa[mesas.size()];
+        int i = 0;
         int gridH = 0, gridV =0;
-        
-        for(int i=0; i<qtdMesas; i++){
-            botoesMesas[i] = new ButtonMesa(Integer.toString(mesas[i].getCod_mesa()),this::abrirMesa, this::fecharMesa, this::reservarMesa,this::abrirMesa, this::abrirMesa);
+       
+        for(Mesa m : mesas ){
+            botoesMesas[i] = new ButtonMesa(Integer.toString(m.getId()),m.getEstado(),this::abrirMesa, this::fecharMesa, this::reservarMesa, this::status,this::novoPedido);
             grMesas.add(botoesMesas[i],gridV,gridH);
             GridPane.setHalignment(botoesMesas[i], HPos.CENTER);
             GridPane.setValignment(botoesMesas[i], VPos.CENTER);
@@ -72,8 +55,11 @@ public class TelaPrincipal {
             }
             else{
                 gridV++;
-            }           
+            }
+            i++;
         }
+
+        
     }
     
     public void start (){
@@ -96,17 +82,21 @@ public class TelaPrincipal {
     }
     
     public void abrirMesa(ActionEvent e){
-        botoesMesas[parseId(e)-1].setEstado("abrir"); // -1 pois o id da mesa começa em 1;
+        botoesMesas[parseId(e)-1].setEstado(EstadoMesa.OCUPADA); // -1 pois o id da mesa começa em 1;
            
     }
     public void fecharMesa(ActionEvent e){
         //fachar a comanda e abrir tela de pagamento
-        botoesMesas[parseId(e)-1].setEstado("livre");    
+        botoesMesas[parseId(e)-1].setEstado(EstadoMesa.LIVRE);    
     }
     public void reservarMesa(ActionEvent e){
-        botoesMesas[parseId(e)-1].setEstado("reservada");
-    
+        botoesMesas[parseId(e)-1].setEstado(EstadoMesa.RESERVADA); 
     
     }
+    public void novoPedido(ActionEvent e){
+        
+    }
+    public void status(ActionEvent e){
     
+    }
 }

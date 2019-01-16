@@ -5,28 +5,30 @@
  */
 package com.restaurante.java.model;
 
+import com.restaurante.java.model.enums.EstadoMesa;
+
 /**
  *
  * @author teo
  */
 public class Mesa {
-    private int cod_mesa;
-    private char estado;
+    private int id;
+    private EstadoMesa estado;
     private int qtdCadeiras;
 
-    public int getCod_mesa() {
-        return cod_mesa;
+    public int getId() {
+        return id;
     }
 
-    public void setCod_mesa(int cod_mesa) {
-        this.cod_mesa = cod_mesa;
+    public void setId(int cod_mesa) {
+        this.id = cod_mesa;
     }
 
-    public char getEstado() {
+    public EstadoMesa getEstado() {
         return estado;
     }
 
-    public void setEstado(char estado) {
+    public void setEstado(EstadoMesa estado) {
         this.estado = estado;
     }
 
@@ -40,7 +42,7 @@ public class Mesa {
 
     @Override
     public String toString() {
-        return "Mesa{" + "cod_mesa=" + cod_mesa + ", estado=" + estado + ", qtdCadeiras=" + qtdCadeiras + '}';
+        return "Mesa{" + "cod_mesa=" + id + ", estado=" + estado + ", qtdCadeiras=" + qtdCadeiras + '}';
     }
     
 }

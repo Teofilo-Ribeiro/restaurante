@@ -42,7 +42,7 @@ public class PratoDAO {
         }
     }
     
-    /*public List<Prato> listarPratos(){
+    public List<Prato> listarPratos(){
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -68,7 +68,7 @@ public class PratoDAO {
         }
         
         return pratos;
-    }*/
+    }
     public Prato listarPratos(String Descricao){
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;

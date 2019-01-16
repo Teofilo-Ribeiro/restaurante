@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package com.restaurante.java.util;
+import com.restaurante.java.model.enums.EstadoMesa;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.MenuButton;
@@ -28,10 +29,12 @@ public class ButtonMesa extends MenuButton {
     private String codMesa;
    
 
-    public ButtonMesa(String codMesa,EventHandler<ActionEvent> mAbrir,EventHandler<ActionEvent> mFechar,
+    public ButtonMesa(String codMesa,EstadoMesa estado, EventHandler<ActionEvent> mAbrir,EventHandler<ActionEvent> mFechar,
                     EventHandler<ActionEvent> mReservar,EventHandler<ActionEvent> mStatus, EventHandler<ActionEvent> mNPedido  ) {
         super("Mesa: " + codMesa);
-        estado = new Circle(9.0, Color.GREEN);
+        this.estado = new Circle(9.0);
+        this.setEstado(estado);
+        //this.setEstado("livre");
         this.abrir = new MenuItem("Abrir");
         this.abrir.setOnAction(mAbrir);
         this.abrir.setId(codMesa);
@@ -53,18 +56,19 @@ public class ButtonMesa extends MenuButton {
         this.status.setId(codMesa);
         
         super.getItems().addAll(this.abrir,this.fechar,this.reservar,this.status,this.novoPedido);
-        super.setGraphic(estado);
+        super.setGraphic(this.estado);
         super.setMinSize(142, 68);
         super.setId(codMesa);       
     }
         
-    public void setEstado(String estado){
+    public void setEstado(EstadoMesa estado){
         switch(estado){
-            case "abrir": this.estado.setFill(Color.RED);
+            case OCUPADA: this.estado.setFill(Color.RED);
+            
                             break;
-            case "reservada": this.estado.setFill(Color.GREY);
+            case RESERVADA: this.estado.setFill(Color.GREY);
                             break;
-            case "livre": this.estado.setFill(Color.GREEN);
+            case LIVRE: this.estado.setFill(Color.GREEN);
                             break;
                     
         }
