@@ -5,7 +5,8 @@
  */
 package com.restaurante.java.controller;
 
-import com.restaurante.java.dao.MesaDAO;
+import com.restaurante.java.factory.MesaDaoFactory;
+import com.restaurante.java.interfaces.MesaDao;
 import com.restaurante.java.model.Mesa;
 import java.util.List;
 
@@ -13,11 +14,16 @@ import java.util.List;
  *
  * @author teo
  */
-public class Principal {
+public class CadastroMesas {
     
     
     public List<Mesa> listarTodos(){
-        MesaDAO mesaDao = new MesaDAO();
-        return mesaDao.listarMesas();
+        MesaDao mesaDao = MesaDaoFactory.criarMesaDao();
+        return mesaDao.buscarTodos();
+    }
+    
+    public void atualizarEstado(Mesa mesa){
+        MesaDao mesaDao= MesaDaoFactory.criarMesaDao();
+        mesaDao.atualizar(mesa);
     }
 }

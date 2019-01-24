@@ -6,13 +6,12 @@
 package com.restaurante.java.view;
 
 
-import com.restaurante.java.controller.Principal;
+import com.restaurante.java.controller.CadastroMesas;
 import com.restaurante.java.model.Mesa;
 import com.restaurante.java.model.enums.EstadoMesa;
 import com.restaurante.java.util.ButtonMesa;
 import static com.restaurante.java.util.ButtonMesa.parseId;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,11 +35,12 @@ public class TelaPrincipal {
     
     //private Mesa mesas [];
     private ButtonMesa[] botoesMesas;
+    private List<Mesa> mesas;
     
     @FXML
     void initialize (){
-        Principal p = new Principal();
-        List<Mesa> mesas= p.listarTodos();
+        CadastroMesas cadMesas = new CadastroMesas();
+        mesas= cadMesas.listarTodos();
         botoesMesas= new ButtonMesa[mesas.size()];
         int i = 0;
         int gridH = 0, gridV =0;
@@ -60,7 +60,7 @@ public class TelaPrincipal {
         }
 
         
-    }
+}
     
     public void start (){
         
@@ -82,21 +82,39 @@ public class TelaPrincipal {
     }
     
     public void abrirMesa(ActionEvent e){
-        botoesMesas[parseId(e)-1].setEstado(EstadoMesa.OCUPADA); // -1 pois o id da mesa começa em 1;
-           
+        CadastroMesas p = new CadastroMesas();   
+        botoesMesas[parseId(e)-1].setEstado(EstadoMesa.OCUPADA); // -1 pois o id da mesa começa em 1;        
+        Mesa mesa = mesas.get(parseId(e)-1);
+        mesa.setEstado(EstadoMesa.OCUPADA);
+        p.atualizarEstado(mesa);
     }
     public void fecharMesa(ActionEvent e){
         //fachar a comanda e abrir tela de pagamento
-        botoesMesas[parseId(e)-1].setEstado(EstadoMesa.LIVRE);    
+        CadastroMesas p = new CadastroMesas();
+        botoesMesas[parseId(e)-1].setEstado(EstadoMesa.LIVRE); 
+        Mesa mesa = mesas.get(parseId(e)-1);
+        mesa.setEstado(EstadoMesa.LIVRE);
+        p.atualizarEstado(mesa);
     }
     public void reservarMesa(ActionEvent e){
-        botoesMesas[parseId(e)-1].setEstado(EstadoMesa.RESERVADA); 
-    
+        CadastroMesas p = new CadastroMesas();
+                
+        botoesMesas[parseId(e)-1].setEstado(EstadoMesa.RESERVADA);
+                
+        Mesa mesa = mesas.get(parseId(e)-1);
+        mesa.setEstado(EstadoMesa.RESERVADA);
+        p.atualizarEstado(mesa);
     }
     public void novoPedido(ActionEvent e){
         
     }
     public void status(ActionEvent e){
+    
+    }
+    
+    public void cadPratos(){
+        TelaCadastroItem tCadPratos = new TelaCadastroItem();
+        tCadPratos.start();
     
     }
 }

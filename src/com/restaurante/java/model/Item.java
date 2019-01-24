@@ -9,7 +9,7 @@ package com.restaurante.java.model;
  *
  * @author teo
  */
-public class Prato {
+public class Item {
     private String descricao;
     private double preco;
     private int id;

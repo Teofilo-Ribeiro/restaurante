@@ -5,11 +5,11 @@
  */
 package com.restaurante.java.view;
 
-import com.restaurante.java.model.Prato;
+import com.restaurante.java.model.Item;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.application.Application;
+
 
 
 import javafx.fxml.FXML;
@@ -26,7 +26,7 @@ import javafx.stage.Stage;
  *
  * @author teo
  */
-public  class VerificacaoCadPratos {
+public  class TelaVerificacaoCadItem {
     
        
     @FXML
@@ -55,7 +55,10 @@ public  class VerificacaoCadPratos {
     private static int id;
     private static String Descricao;
     private static double preco;
-    private static Prato infoPrato;
+    private static Item infoPrato;
+    private static boolean ehUpdate;
+    
+    
     
     @FXML
     void initialize() {
@@ -69,18 +72,19 @@ public  class VerificacaoCadPratos {
         tfId.setText(Integer.toString(infoPrato.getId()));
         tfDescricao.setText(infoPrato.getDescricao());
         tfPreco.setText(Double.toString(infoPrato.getPreco()));
+        btConfirmar.setVisible(ehUpdate);
     }
     
-    public void start (String titulo, Prato p){
+    public void start (String titulo, Item p, boolean ehUpdate){
         //lbTitulo.setText(titulo);
        //initialize("Teste000");
-       
-       this.titulo = titulo;
-       this.infoPrato= p;
-       stage= new Stage();
+        this.titulo = titulo;
+        this.infoPrato= p;
+        this.ehUpdate= ehUpdate;
+        stage= new Stage();
         Parent fxmlPrincipal; 
         try {
-            fxmlPrincipal = FXMLLoader.load(getClass().getResource("viewfxml/VerificacaoCadPratos.fxml"));
+            fxmlPrincipal = FXMLLoader.load(getClass().getResource("viewfxml/TelaVerificacaoCadItem.fxml"));
             popup = new Scene(fxmlPrincipal);
         } catch (IOException ex) {
             System.out.println("AQUI!");

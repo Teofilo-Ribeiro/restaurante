@@ -5,10 +5,10 @@
  */
 package com.restaurante.java.restaurante;
 
-import com.restaurante.java.model.Prato;
-import com.restaurante.java.dao.PratoDAO;
+import com.restaurante.java.model.Item;
+import com.restaurante.java.dao.ItemDaoJDBC;
 import com.restaurante.java.view.TelaPrincipal;
-import com.restaurante.java.view.VerificacaoCadPratos;
+import com.restaurante.java.view.TelaVerificacaoCadItem;
 
 /**
  *
