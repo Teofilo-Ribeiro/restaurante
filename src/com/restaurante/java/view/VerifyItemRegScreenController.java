@@ -19,6 +19,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -26,65 +27,65 @@ import javafx.stage.Stage;
  *
  * @author teo
  */
-public  class TelaVerificacaoCadItem {
+public  class VerifyItemRegScreenController {
     
        
     @FXML
-    private Label lbTitulo;
+    private Label lbTitle;
 
     @FXML
     private TextField tfId;
 
     @FXML
-    private TextField tfDescricao;
+    private TextField tfDescription;
 
     @FXML
-    private TextField tfPreco;
+    private TextField tfPrice;
 
     @FXML
-    private Button btConfirmar;
+    private Button btConfirm;
 
     @FXML
-    private Button btCancelar;
+    private Button btCancel;
     
         
     private static Scene popup;
     private static Stage stage;
     
-    private static String titulo;
+    private static String title;
     private static int id;
     private static String Descricao;
     private static double preco;
-    private static Item infoPrato;
+    private static Item itemData;
     private static boolean ehUpdate;
     
     
     
     @FXML
     void initialize() {
-        assert lbTitulo != null : "fx:id=\"lbTitulo\" was not injected: check your FXML file 'VerificacaoCadPratos.fxml'.";
+        assert lbTitle != null : "fx:id=\"lbTitulo\" was not injected: check your FXML file 'VerificacaoCadPratos.fxml'.";
         assert tfId != null : "fx:id=\"tfId\" was not injected: check your FXML file 'VerificacaoCadPratos.fxml'.";
-        assert tfDescricao != null : "fx:id=\"tfDescricao\" was not injected: check your FXML file 'VerificacaoCadPratos.fxml'.";
-        assert tfPreco != null : "fx:id=\"tfPreco\" was not injected: check your FXML file 'VerificacaoCadPratos.fxml'.";
-        assert btConfirmar != null : "fx:id=\"btConfirmar\" was not injected: check your FXML file 'VerificacaoCadPratos.fxml'.";
-        assert btCancelar != null : "fx:id=\"btCancelar\" was not injected: check your FXML file 'VerificacaoCadPratos.fxml'.";
-        lbTitulo.setText(titulo);
-        tfId.setText(Integer.toString(infoPrato.getId()));
-        tfDescricao.setText(infoPrato.getDescricao());
-        tfPreco.setText(Double.toString(infoPrato.getPreco()));
-        btConfirmar.setVisible(ehUpdate);
+        assert tfDescription != null : "fx:id=\"tfDescricao\" was not injected: check your FXML file 'VerificacaoCadPratos.fxml'.";
+        assert tfPrice != null : "fx:id=\"tfPreco\" was not injected: check your FXML file 'VerificacaoCadPratos.fxml'.";
+        assert btConfirm != null : "fx:id=\"btConfirmar\" was not injected: check your FXML file 'VerificacaoCadPratos.fxml'.";
+        assert btCancel != null : "fx:id=\"btCancelar\" was not injected: check your FXML file 'VerificacaoCadPratos.fxml'.";
+        lbTitle.setText(title);
+        tfId.setText(Integer.toString(itemData.getId()));
+        tfDescription.setText(itemData.getDescription());
+        tfPrice.setText(Double.toString(itemData.getPrice()));
+        btConfirm.setVisible(ehUpdate);
     }
     
-    public void start (String titulo, Item p, boolean ehUpdate){
+    public void start (String title, Item item, boolean isUpdate){
         //lbTitulo.setText(titulo);
        //initialize("Teste000");
-        this.titulo = titulo;
-        this.infoPrato= p;
-        this.ehUpdate= ehUpdate;
+        this.title = title;
+        this.itemData= item;
+        this.ehUpdate= isUpdate;
         stage= new Stage();
         Parent fxmlPrincipal; 
         try {
-            fxmlPrincipal = FXMLLoader.load(getClass().getResource("viewfxml/TelaVerificacaoCadItem.fxml"));
+            fxmlPrincipal = FXMLLoader.load(getClass().getResource("viewfxml/VerifyItemRegScreen.fxml"));
             popup = new Scene(fxmlPrincipal);
         } catch (IOException ex) {
             System.out.println("AQUI!");
@@ -92,7 +93,7 @@ public  class TelaVerificacaoCadItem {
             Logger.getLogger(NewFXMain.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(popup);
         stage.show();
        // texto("Oi");    

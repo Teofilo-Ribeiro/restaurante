@@ -6,8 +6,7 @@
 package com.restaurante.java.view;
 
 import com.restaurante.java.model.Item;
-import com.restaurante.java.controller.CadastroItem;
-import com.restaurante.java.dao.ItemDaoJDBC;
+import com.restaurante.java.controller.ItemRegistration;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,6 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -26,57 +26,48 @@ import javafx.stage.Stage;
  *
  * @author teo
  */
-public class TelaCadastroItem  {
-   /*
-    //@FXML
-    private TextField tfNomedoPrato;
+public class ItemRegisterScreenController  {
+   
     @FXML
-    private TextField tfPreco;
-    @FXML
-    private Button btConfirmar;
-*/
-    
-    
-    @FXML
-    private Label lbTitulo;
+    private Label lbTitle;
 
     @FXML
-    private Label lbDescricaoItem;
+    private Label lbItemDescription;
 
     @FXML
-    private Label lbPreco;
+    private Label lbPrice;
 
     @FXML
     private Label lbCifrao;
 
     @FXML
-    private TextField tfDescricaoItem;
+    private TextField tfItemDescription;
     
     @FXML
-    private TextField tfPreco;
+    private TextField tfPrice;
 
     @FXML
-    private Button btConfirmar;
+    private Button btConfirm;
     
     private static Scene scene;
     private static Stage stage;
     
     
     @FXML
-    public void cadastrar (){
-       Item item, itemVerificacao;
-       CadastroItem cadItem = new CadastroItem();
-       TelaVerificacaoCadItem verificaCadItem = new TelaVerificacaoCadItem();
+    public void register (){
+       Item item, itemVerification;
+       ItemRegistration itemReg = new ItemRegistration();
+       VerifyItemRegScreenController verificationItemReg = new VerifyItemRegScreenController();
        try {
            item = getFormData();
-           itemVerificacao = cadItem.buscar(item.getDescricao());
-           if(itemVerificacao.getDescricao() == null){
+           itemVerification = itemReg.find(item.getDescription());
+           if(itemVerification.getDescription() == null){
                //item foi cadastrador mostar id
-               item.setId(cadItem.cadastrar(item));
-               verificaCadItem.start("Item cadastrado com sucesso!", item, false);               
+               item.setId(itemReg.register(item));
+               verificationItemReg.start("Item cadastrado com sucesso!", item, false);               
            }
            else{
-               verificaCadItem.start("Item já cadastrado, deseja salvar alterações?", itemVerificacao, true);
+               verificationItemReg.start("Item já cadastrado, deseja salvar alterações?", itemVerification, true);
            }
            
        }
@@ -88,13 +79,13 @@ public class TelaCadastroItem  {
     
     public Item getFormData(){
         Item item = new Item();
-        if(tfDescricaoItem.getText() == null || tfDescricaoItem.getText().trim().equals("")){
+        if(tfItemDescription.getText() == null || tfItemDescription.getText().trim().equals("")){
             throw new IllegalStateException("Todos os campos deve está devidamente preenchidos!");
         }
-        item.setDescricao(tfDescricaoItem.getText());
+        item.setDescription(tfItemDescription.getText());
         
         try{
-            item.setPreco(Double.parseDouble(tfPreco.getText()));
+            item.setPrice(Double.parseDouble(tfPrice.getText()));
         }catch(NumberFormatException ex){
             throw new IllegalStateException ("O preço digitado é invalido!");
         }
@@ -110,7 +101,7 @@ public class TelaCadastroItem  {
         try {
             stage= new Stage();
         //Parent fxmlPrincipal; 
-            Parent fxmlPrincipal = FXMLLoader.load(getClass().getResource("viewfxml/TelaCadastroItem.fxml"));
+            Parent fxmlPrincipal = FXMLLoader.load(getClass().getResource("viewfxml/ItemRegisterScreen.fxml"));
             scene = new Scene(fxmlPrincipal);
         } catch (IOException ex) {
             System.out.println("AQUI!");
@@ -118,7 +109,7 @@ public class TelaCadastroItem  {
             Logger.getLogger(NewFXMain.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-
+        
         stage.setScene(scene);
         stage.setTitle("Cadastro de Itens"); 
         stage.show();

@@ -13,10 +13,10 @@ import java.util.List;
  * @author teo
  */
 public interface ItemDao {
-    public void salvar(Item item);
-    public List<Item> buscarTodos();
-    public Item buscarPorId(int id);
-    public Item buscarPorDescricao(String descricao);
-    public void atualizar(Item item);
-    public void remover (Item item);
+    public void save(Item item);
+    public List<Item> findAll();
+    public Item findById(int id);
+    public Item findByDescription(String description);
+    public void update(Item item);
+    public void remove (Item item);
 }

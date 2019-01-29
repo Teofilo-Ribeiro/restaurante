@@ -13,7 +13,7 @@ import com.restaurante.java.interfaces.ItemDao;
  * @author teo
  */
 public class ItemDaoFactory {
-    public static ItemDao criarItemDao(){
+    public static ItemDao createItemDao(){
         return new ItemDaoJDBC();
     }
 }

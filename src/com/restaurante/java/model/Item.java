@@ -10,8 +10,8 @@ package com.restaurante.java.model;
  * @author teo
  */
 public class Item {
-    private String descricao;
-    private double preco;
+    private String description;
+    private double price;
     private int id;
 
     public int getId() {
@@ -22,20 +22,20 @@ public class Item {
         this.id = id;
     }
     
-    public String getDescricao() {
-        return descricao;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public double getPreco() {
-        return preco;
+    public double getPrice() {
+        return price;
     }
 
-    public void setPreco(double preco) {
-        this.preco = preco;
+    public void setPrice(double price) {
+        this.price = price;
     }
    
     

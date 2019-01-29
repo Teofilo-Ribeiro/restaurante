@@ -5,17 +5,17 @@
  */
 package com.restaurante.java.interfaces;
 
-import com.restaurante.java.model.Mesa;
+import com.restaurante.java.model.Table;
 import java.util.List;
 
 /**
  *
  * @author teo
  */
-public interface MesaDao {
-    public void salvar(Mesa mesa);
-    public Mesa buscarPorId(int id);
-    public List<Mesa> buscarTodos();
-    public void atualizar(Mesa mesa);
-    public void remover (Mesa mesa);
+public interface TableDao {
+    public void save(Table table);
+    public Table findById(int id);
+    public List<Table> findAll();
+    public void update(Table table);
+    public void remove (Table table);
 }

@@ -5,15 +5,15 @@
  */
 package com.restaurante.java.factory;
 
-import com.restaurante.java.dao.MesaDaoJDBC;
-import com.restaurante.java.interfaces.MesaDao;
+import com.restaurante.java.dao.TableDaoJDBC;
+import com.restaurante.java.interfaces.TableDao;
 
 /**
  *
  * @author teo
  */
-public class MesaDaoFactory {
-    public static MesaDao criarMesaDao(){
-        return new MesaDaoJDBC();
+public class TableDaoFactory {
+    public static TableDao createMesaDao(){
+        return new TableDaoJDBC();
     }
 }

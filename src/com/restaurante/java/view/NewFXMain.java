@@ -47,7 +47,7 @@ public class NewFXMain extends Application {
        
         primaryStage.setScene(principal);
         primaryStage.show();*/
-        TelaPrincipal tp = new TelaPrincipal();
+        MainScreenController tp = new MainScreenController();
         tp.start();
         
     }

@@ -9,7 +9,7 @@ package com.restaurante.java.model.enums;
  *
  * @author teo
  */
-public enum EstadoMesa {
+public enum TableStatus {
     LIVRE,
     OCUPADA,
     RESERVADA;    

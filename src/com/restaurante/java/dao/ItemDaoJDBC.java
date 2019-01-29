@@ -25,14 +25,14 @@ import javax.swing.JOptionPane;
 public class ItemDaoJDBC implements ItemDao{
     
     @Override
-    public void salvar(Item p){
+    public void save(Item item){
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
-        
+           
         try {
             stmt = con.prepareStatement("INSERT INTO PRATOS(DESCRICAO, PRECO)VALUES(?,?)");
-            stmt.setString(1,p.getDescricao());
-            stmt.setDouble(2, p.getPreco());
+            stmt.setString(1,item.getDescription());
+            stmt.setDouble(2, item.getPrice());
             stmt.executeUpdate();
             
             JOptionPane.showMessageDialog(null,"Sucesso!");
@@ -46,23 +46,23 @@ public class ItemDaoJDBC implements ItemDao{
     }
     
     @Override
-    public List<Item> buscarTodos(){
+    public List<Item> findAll(){
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
         
-        List<Item> pratos = new ArrayList<>();
+        List<Item> items = new ArrayList<>();
         
         try {
             stmt = con.prepareStatement("SELECT * FROM PRATOS");
             rs=stmt.executeQuery();
             
             while(rs.next()){
-                Item prato = new Item();
-                prato.setId(rs.getInt("COD_PRATOS"));
-                prato.setDescricao(rs.getString("DESCRICAO"));
-                prato.setPreco(rs.getDouble("PRECO"));
-                pratos.add(prato);
+                Item item = new Item();
+                item.setId(rs.getInt("COD_PRATOS"));
+                item.setDescription(rs.getString("DESCRICAO"));
+                item.setPrice(rs.getDouble("PRECO"));
+                items.add(item);
             
             }
         } catch (SQLException ex) {
@@ -71,23 +71,23 @@ public class ItemDaoJDBC implements ItemDao{
             ConnectionFactory.closeConnetion(con, stmt, rs);
         }
         
-        return pratos;
+        return items;
     }
     @Override
-    public Item buscarPorDescricao(String Descricao){
+    public Item findByDescription(String description){
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        Item prato = new Item();
+        Item item = new Item();
         
         try {
             stmt= con.prepareStatement("SELECT * FROM PRATOS WHERE DESCRICAO = ?");
-            stmt.setString(1, Descricao);
+            stmt.setString(1, description);
             rs=stmt.executeQuery();
             if(rs.next()){
-                prato.setId(rs.getInt("COD_PRATOS"));
-                prato.setDescricao(rs.getString("DESCRICAO"));
-                prato.setPreco(rs.getDouble("PRECO"));
+                item.setId(rs.getInt("COD_PRATOS"));
+                item.setDescription(rs.getString("DESCRICAO"));
+                item.setPrice(rs.getDouble("PRECO"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(ItemDaoJDBC.class.getName()).log(Level.SEVERE, null, ex);
@@ -97,10 +97,10 @@ public class ItemDaoJDBC implements ItemDao{
         }
         
         
-        return prato;
+        return item;
     }
     @Override
-    public Item buscarPorId(int id){
+    public Item findById(int id){
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -112,8 +112,8 @@ public class ItemDaoJDBC implements ItemDao{
             rs=stmt.executeQuery();
             if(rs.next()){
                 item.setId(rs.getInt("COD_PRATOS"));
-                item.setDescricao(rs.getString("DESCRICAO"));
-                item.setPreco(rs.getDouble("PRECO"));
+                item.setDescription(rs.getString("DESCRICAO"));
+                item.setPrice(rs.getDouble("PRECO"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(ItemDaoJDBC.class.getName()).log(Level.SEVERE, null, ex);
@@ -127,15 +127,15 @@ public class ItemDaoJDBC implements ItemDao{
         
     } 
     @Override
-    public void atualizar(Item item){
+    public void update(Item item){
     Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         
         try{
             stmt = con.prepareStatement("UPDATE PRATOS SET COD_PRATO = ?, DESCRICAO = ?, PRECO = ? WHERE COD_MESA = ?");
             stmt.setInt(1,item.getId());
-            stmt.setString(2, item.getDescricao());
-            stmt.setDouble(3,item.getPreco());
+            stmt.setString(2, item.getDescription());
+            stmt.setDouble(3,item.getPrice());
             stmt.executeUpdate();
             System.out.println("Update realizado com sucesso!");
         }catch (SQLException ex) {
@@ -146,6 +146,6 @@ public class ItemDaoJDBC implements ItemDao{
         }
     }
     @Override
-    public void remover (Item item){}
+    public void remove (Item item){}
     
 }

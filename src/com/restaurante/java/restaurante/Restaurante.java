@@ -7,8 +7,8 @@ package com.restaurante.java.restaurante;
 
 import com.restaurante.java.model.Item;
 import com.restaurante.java.dao.ItemDaoJDBC;
-import com.restaurante.java.view.TelaPrincipal;
-import com.restaurante.java.view.TelaVerificacaoCadItem;
+import com.restaurante.java.view.MainScreenController;
+import com.restaurante.java.view.VerifyItemRegScreenController;
 
 /**
  *
@@ -27,7 +27,7 @@ public class Restaurante {
         dao.create(p);
         System.out.println("Fim Do programa!");
        */
-        TelaPrincipal tp = new TelaPrincipal();
+        MainScreenController tp = new MainScreenController();
         tp.start();
     }
     

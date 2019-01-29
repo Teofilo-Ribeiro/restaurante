@@ -6,9 +6,8 @@
 package com.restaurante.java.dao;
 
 import com.restaurante.java.connection.ConnectionFactory;
-import com.restaurante.java.interfaces.MesaDao;
-import com.restaurante.java.model.Mesa;
-import com.restaurante.java.model.enums.EstadoMesa;
+import com.restaurante.java.model.Table;
+import com.restaurante.java.model.enums.TableStatus;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,22 +16,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import com.restaurante.java.interfaces.TableDao;
 
 /**
  *
  * @author teo
  */
-public class MesaDaoJDBC implements MesaDao{
+public class TableDaoJDBC implements TableDao{
     
     @Override
-    public void atualizar(Mesa mesa){
+    public void update(Table table){
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         
         try{
             stmt = con.prepareStatement("UPDATE MESAS SET ESTADO = ? WHERE COD_MESA = ?");
-            stmt.setString(1,mesa.getEstado().name());
-            stmt.setDouble(2, mesa.getId());
+            stmt.setString(1,table.getStatus().name());
+            stmt.setDouble(2, table.getId());
             stmt.executeUpdate();
             System.out.println("Update realizado com sucesso!");
         }catch (SQLException ex) {
@@ -44,23 +44,23 @@ public class MesaDaoJDBC implements MesaDao{
     }
     
     @Override
-    public List<Mesa> buscarTodos(){
+    public List<Table> findAll(){
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
         
-        List<Mesa> mesas = new ArrayList<>();
+        List<Table> tables = new ArrayList<>();
         
         try {
             stmt = con.prepareStatement("SELECT * FROM MESAS");
             rs=stmt.executeQuery();
             
             while(rs.next()){
-                Mesa mesa = new Mesa();
-                mesa.setId(rs.getInt("COD_MESA"));
-                mesa.setQtdCadeiras(rs.getInt("QTD_CADEIRAS"));
-                mesa.setEstado(EstadoMesa.valueOf(rs.getString("Estado")));
-                mesas.add(mesa);
+                Table table = new Table();
+                table.setId(rs.getInt("COD_MESA"));
+                table.setQtyChairs(rs.getInt("QTD_CADEIRAS"));
+                table.setStatus(TableStatus.valueOf(rs.getString("Estado")));
+                tables.add(table);
             
             }
         } catch (SQLException ex) {
@@ -69,16 +69,16 @@ public class MesaDaoJDBC implements MesaDao{
             ConnectionFactory.closeConnetion(con, stmt, rs);
         }
         
-        return mesas;
+        return tables;
     }
 
     @Override
-    public void salvar(Mesa mesa) {
+    public void save(Table table) {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         try{
             stmt = con.prepareStatement("INSERT INTO MESAS (QTD_CADEIRAS) VALUES (?)");
-            stmt.setInt(1,mesa.getQtdCadeiras());
+            stmt.setInt(1,table.getQtyChairs());
             stmt.executeUpdate();
         
         }catch(SQLException ex){
@@ -90,20 +90,20 @@ public class MesaDaoJDBC implements MesaDao{
     }
 
     @Override
-    public Mesa buscarPorId(int id) {
+    public Table findById(int id) {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        Mesa mesa = new Mesa();
+        Table table = new Table();
         
         try {
             stmt= con.prepareStatement("SELECT * FROM MESAS WHERE COD_MESA = ?");
             stmt.setInt(1, id);
             rs=stmt.executeQuery();
             if(rs.next()){
-                mesa.setId(rs.getInt("COD_MESA"));
-                mesa.setQtdCadeiras(rs.getInt("QTD_CADEIRAS"));
-                mesa.setEstado(EstadoMesa.valueOf(rs.getString("ESTADO")));
+                table.setId(rs.getInt("COD_MESA"));
+                table.setQtyChairs(rs.getInt("QTD_CADEIRAS"));
+                table.setStatus(TableStatus.valueOf(rs.getString("ESTADO")));
                 
             }
         } catch (SQLException ex) {
@@ -113,10 +113,10 @@ public class MesaDaoJDBC implements MesaDao{
             ConnectionFactory.closeConnetion(con, stmt, rs);
         }       
         
-        return mesa;
+        return table;
     }
     @Override
-    public void remover (Mesa mesa){}
+    public void remove (Table table){}
     
     
 }

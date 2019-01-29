@@ -14,7 +14,7 @@ import javafx.fxml.Initializable;
  *
  * @author teo
  */
-public class TelaDePratos implements Initializable {
+public class ItemsScreenController implements Initializable {
 
     /**
      * Initializes the controller class.
