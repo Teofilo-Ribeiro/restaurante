@@ -6,6 +6,7 @@
 package com.restaurante.java.factory;
 
 import com.restaurante.java.dao.TableDaoJDBC;
+import com.restaurante.java.exception.DbException;
 import com.restaurante.java.interfaces.TableDao;
 
 /**
@@ -13,7 +14,7 @@ import com.restaurante.java.interfaces.TableDao;
  * @author teo
  */
 public class TableDaoFactory {
-    public static TableDao createMesaDao(){
+    public static TableDao createMesaDao()throws DbException{
         return new TableDaoJDBC();
     }
 }

@@ -41,9 +41,10 @@
                 <Blend />
             </effect>
         </Label>
-        <TextField fx:id="tfItemDescription" layoutX="185.0" layoutY="99.0" prefHeight="26.0" prefWidth="387.0" />
-        <TextField fx:id="tfPrice" layoutX="185.0" layoutY="149.0" prefHeight="26.0" prefWidth="100.0" />
-        <Button fx:id="btConfirm" layoutX="185.0" layoutY="213.0" mnemonicParsing="false" onAction="#register" text="Confirmar" />
+        <TextField fx:id="tfItemDescription" layoutX="185.0" layoutY="99.0" onAction="#onRegister" prefHeight="26.0" prefWidth="387.0" />
+        <TextField fx:id="tfPrice" layoutX="185.0" layoutY="149.0" onAction="#onRegister" prefHeight="26.0" prefWidth="100.0" />
+        <Button fx:id="btConfirm" layoutX="185.0" layoutY="213.0" mnemonicParsing="false" onAction="#onRegister" text="Confirmar" />
+      <Button fx:id="btCancel" layoutX="285.0" layoutY="213.0" mnemonicParsing="false" onAction="#onCancel" text="Cancelar" />
    </children>
  
 

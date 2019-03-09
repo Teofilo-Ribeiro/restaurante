@@ -6,6 +6,7 @@
 package com.restaurante.java.dao;
 
 import com.restaurante.java.connection.ConnectionFactory;
+import com.restaurante.java.exception.DbException;
 import com.restaurante.java.model.Table;
 import com.restaurante.java.model.enums.TableStatus;
 import java.sql.Connection;
@@ -23,10 +24,12 @@ import com.restaurante.java.interfaces.TableDao;
  * @author teo
  */
 public class TableDaoJDBC implements TableDao{
-    
+    Connection con = ConnectionFactory.getConnection();
+    public TableDaoJDBC() throws DbException{
+        this.con = ConnectionFactory.getConnection();
+    }
     @Override
-    public void update(Table table){
-        Connection con = ConnectionFactory.getConnection();
+    public void update(Table table)throws DbException{
         PreparedStatement stmt = null;
         
         try{
@@ -36,7 +39,7 @@ public class TableDaoJDBC implements TableDao{
             stmt.executeUpdate();
             System.out.println("Update realizado com sucesso!");
         }catch (SQLException ex) {
-            Logger.getLogger(ItemDaoJDBC.class.getName()).log(Level.SEVERE, null, ex);
+            throw new DbException("Erro ao salvar! "+ ex.getMessage());
             
         }finally{
             ConnectionFactory.closeConnetion(con, stmt);
@@ -44,8 +47,7 @@ public class TableDaoJDBC implements TableDao{
     }
     
     @Override
-    public List<Table> findAll(){
-        Connection con = ConnectionFactory.getConnection();
+    public List<Table> findAll()throws DbException{
         PreparedStatement stmt = null;
         ResultSet rs = null;
         
@@ -64,7 +66,7 @@ public class TableDaoJDBC implements TableDao{
             
             }
         } catch (SQLException ex) {
-            Logger.getLogger(ItemDaoJDBC.class.getName()).log(Level.SEVERE, null, ex);
+            throw new DbException("Erro ao buscar!\n"+ ex.getMessage());
         }finally{
             ConnectionFactory.closeConnetion(con, stmt, rs);
         }
@@ -73,8 +75,7 @@ public class TableDaoJDBC implements TableDao{
     }
 
     @Override
-    public void save(Table table) {
-        Connection con = ConnectionFactory.getConnection();
+    public void save(Table table)throws DbException {
         PreparedStatement stmt = null;
         try{
             stmt = con.prepareStatement("INSERT INTO MESAS (QTD_CADEIRAS) VALUES (?)");
@@ -82,7 +83,7 @@ public class TableDaoJDBC implements TableDao{
             stmt.executeUpdate();
         
         }catch(SQLException ex){
-            Logger.getLogger(ItemDaoJDBC.class.getName()).log(Level.SEVERE, null, ex);
+            throw new DbException("Erro ao salvar!\n"+ ex.getMessage());
         }finally{
             ConnectionFactory.closeConnetion(con, stmt);
         }
@@ -90,8 +91,7 @@ public class TableDaoJDBC implements TableDao{
     }
 
     @Override
-    public Table findById(int id) {
-        Connection con = ConnectionFactory.getConnection();
+    public Table findById(int id) throws DbException{
         PreparedStatement stmt = null;
         ResultSet rs = null;
         Table table = new Table();
@@ -107,7 +107,7 @@ public class TableDaoJDBC implements TableDao{
                 
             }
         } catch (SQLException ex) {
-            Logger.getLogger(ItemDaoJDBC.class.getName()).log(Level.SEVERE, null, ex);
+            throw new DbException("Erro ao buscar!\n"+ ex.getMessage());
         }
         finally{
             ConnectionFactory.closeConnetion(con, stmt, rs);
@@ -116,7 +116,7 @@ public class TableDaoJDBC implements TableDao{
         return table;
     }
     @Override
-    public void remove (Table table){}
+    public void remove (Table table)throws DbException{}
     
     
 }

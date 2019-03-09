@@ -5,6 +5,7 @@
  */
 package com.restaurante.java.interfaces;
 
+import com.restaurante.java.exception.DbException;
 import com.restaurante.java.model.Table;
 import java.util.List;
 
@@ -13,9 +14,9 @@ import java.util.List;
  * @author teo
  */
 public interface TableDao {
-    public void save(Table table);
-    public Table findById(int id);
-    public List<Table> findAll();
-    public void update(Table table);
-    public void remove (Table table);
+    public void save(Table table)throws DbException;
+    public Table findById(int id)throws DbException;
+    public List<Table> findAll()throws DbException;
+    public void update(Table table)throws DbException;
+    public void remove (Table table)throws DbException;
 }

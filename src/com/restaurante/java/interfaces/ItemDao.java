@@ -5,6 +5,7 @@
  */
 package com.restaurante.java.interfaces;
 
+import com.restaurante.java.exception.DbException;
 import com.restaurante.java.model.Item;
 import java.util.List;
 
@@ -12,11 +13,11 @@ import java.util.List;
  *
  * @author teo
  */
-public interface ItemDao {
-    public void save(Item item);
-    public List<Item> findAll();
-    public Item findById(int id);
-    public Item findByDescription(String description);
-    public void update(Item item);
-    public void remove (Item item);
+public interface ItemDao  {
+    public void save(Item item)throws DbException;
+    public List<Item> findAll()throws DbException;
+    public Item findById(int id)throws DbException;
+    public Item findByDescription(String description)throws DbException;
+    public void update(Item item)throws DbException;
+    public void delete (Item item)throws DbException;
 }

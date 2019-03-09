@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.restaurante.java.util;
+package com.restaurante.java.view.util;
 import com.restaurante.java.model.enums.TableStatus;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;

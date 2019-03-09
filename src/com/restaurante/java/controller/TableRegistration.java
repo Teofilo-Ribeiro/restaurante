@@ -5,6 +5,7 @@
  */
 package com.restaurante.java.controller;
 
+import com.restaurante.java.exception.DbException;
 import com.restaurante.java.factory.TableDaoFactory;
 import com.restaurante.java.model.Table;
 import java.util.List;
@@ -17,12 +18,12 @@ import com.restaurante.java.interfaces.TableDao;
 public class TableRegistration {
     
     
-    public List<Table> findAll(){
+    public List<Table> findAll() throws DbException{
         TableDao tableDao = TableDaoFactory.createMesaDao();
         return tableDao.findAll();
     }
     
-    public void updateStatus(Table table){
+    public void updateStatus(Table table)throws DbException{
         TableDao tableDao= TableDaoFactory.createMesaDao();
         tableDao.update(table);
     }

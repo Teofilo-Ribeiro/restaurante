@@ -6,6 +6,7 @@
 package com.restaurante.java.factory;
 
 import com.restaurante.java.dao.ItemDaoJDBC;
+import com.restaurante.java.exception.DbException;
 import com.restaurante.java.interfaces.ItemDao;
 
 /**
@@ -13,7 +14,7 @@ import com.restaurante.java.interfaces.ItemDao;
  * @author teo
  */
 public class ItemDaoFactory {
-    public static ItemDao createItemDao(){
+    public static ItemDao createItemDao()throws DbException{
         return new ItemDaoJDBC();
     }
 }
