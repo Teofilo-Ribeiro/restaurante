@@ -14,10 +14,11 @@ import java.util.List;
  * @author teo
  */
 public interface ItemDao  {
-    public void save(Item item)throws DbException;
+    public void create(Item item)throws DbException;
     public List<Item> findAll()throws DbException;
     public Item findById(int id)throws DbException;
     public Item findByDescription(String description)throws DbException;
     public void update(Item item)throws DbException;
     public void delete (Item item)throws DbException;
+    public List<Item> smartFindByDescription(String description) throws DbException;
 }

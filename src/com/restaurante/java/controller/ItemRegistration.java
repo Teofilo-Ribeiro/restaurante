@@ -29,7 +29,7 @@ public class ItemRegistration  {
                                             + "ID: "+ checkItem.getId()
                                             + "\nPreço: " + checkItem.getPrice());
         }
-        itemDao.save(newItem);        
+        itemDao.create(newItem);        
         
         //return findByDescription(item.getDescription()).getId();   
     }
@@ -41,7 +41,7 @@ public class ItemRegistration  {
         return itemDao.findById(id);  
     
     }
-    public List findAll() throws DbException{
+    public List<Item> findAll() throws DbException{
         return itemDao.findAll();
     }
     public void update(Item item) throws DbException{
@@ -50,4 +50,8 @@ public class ItemRegistration  {
     public void delete(Item item) throws DbException{
         itemDao.delete(item);
     }
+    public List<Item> smartFind(String description)throws DbException{
+        return itemDao.smartFindByDescription(description);
+    }
+    
 }

@@ -75,7 +75,7 @@ public class TableDaoJDBC implements TableDao{
     }
 
     @Override
-    public void save(Table table)throws DbException {
+    public void create(Table table)throws DbException {
         PreparedStatement stmt = null;
         try{
             stmt = con.prepareStatement("INSERT INTO MESAS (QTD_CADEIRAS) VALUES (?)");

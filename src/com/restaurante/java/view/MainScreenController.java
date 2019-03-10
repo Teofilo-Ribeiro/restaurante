@@ -40,6 +40,10 @@ public class MainScreenController implements Initializable {
     private GridPane grTables;
     @FXML
     private MenuItem miItemReg;
+    @FXML
+    private MenuItem miOrders;
+    @FXML
+    private MenuItem miCommands;
     private static Stage stage;
     private static Scene scene;
     
@@ -139,7 +143,8 @@ public class MainScreenController implements Initializable {
         }
     }
     public void novoPedido(ActionEvent e){
-        
+        ItemsScreenController itemSc = new ItemsScreenController();
+        itemSc.start(stage,parseId(e));
     }
     public void status(ActionEvent e){
     
@@ -151,4 +156,10 @@ public class MainScreenController implements Initializable {
         itemScreen.start(stage);
     
     }
+    public void onOrders(){
+        OrderScreenController orderSc = new OrderScreenController();
+        orderSc.start(stage);
+    }
+    
+    public void onCommands(){}
 }

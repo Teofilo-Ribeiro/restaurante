@@ -48,6 +48,7 @@ public class ButtonTable extends MenuButton {
         this.book.setId(tableCode);
         
         this.newOrder = new MenuItem("Novo Pedido");
+        this.newOrder.setOnAction(newOrderMethod);
         //this.novoPedido.setOnAction(mAbrir);
         this.newOrder.setId(tableCode);
         

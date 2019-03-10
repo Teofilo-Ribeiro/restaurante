@@ -25,9 +25,11 @@
                   <MenuItem mnemonicParsing="false" text="Mesa" />
                </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
+          <Menu mnemonicParsing="false" text="Visualizar">
             <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
+              <MenuItem fx:id="miOrders" mnemonicParsing="false" onAction="#onOrders" text="Pedidos" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem fx:id="miCommands" mnemonicParsing="false" onAction="#onCommands" text="Comandas" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">

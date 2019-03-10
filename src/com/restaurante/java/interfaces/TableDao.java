@@ -14,7 +14,7 @@ import java.util.List;
  * @author teo
  */
 public interface TableDao {
-    public void save(Table table)throws DbException;
+    public void create(Table table)throws DbException;
     public Table findById(int id)throws DbException;
     public List<Table> findAll()throws DbException;
     public void update(Table table)throws DbException;

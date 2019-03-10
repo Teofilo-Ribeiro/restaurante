@@ -29,7 +29,7 @@ public class ItemDaoJDBC implements ItemDao {
         this.con = ConnectionFactory.getConnection();
     }
     @Override
-    public void save(Item item)throws DbException{
+    public void create(Item item)throws DbException{
         //Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;   
@@ -107,6 +107,35 @@ public class ItemDaoJDBC implements ItemDao {
         return item;
     }
     @Override
+    public List<Item> smartFindByDescription(String description) throws DbException{
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        
+        List<Item> items = new ArrayList<>();
+        
+        try {
+            stmt = con.prepareStatement("SELECT * FROM ITENS WHERE DESCRICAO LIKE ?");
+            stmt.setString(1, "%" + description + "%");
+            rs=stmt.executeQuery();
+            
+            while(rs.next()){
+                Item item = new Item();
+                item.setId(rs.getInt("COD_ITEM"));
+                item.setDescription(rs.getString("DESCRICAO"));
+                item.setPrice(rs.getDouble("PRECO"));
+                items.add(item);
+            
+            }
+        } catch (SQLException ex) {
+            throw new DbException ("ERRO AO BUSCAR ITEM: " + ex.getMessage());
+        }finally{
+            ConnectionFactory.closeConnetion(null,stmt,rs);
+        }
+        
+        return items;
+    
+    }    
+    @Override
     public Item findById(int id)throws DbException{
         //Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
@@ -169,8 +198,7 @@ public class ItemDaoJDBC implements ItemDao {
             
         }finally{
             ConnectionFactory.closeConnetion(null, stmt);
-        }
-    
+        }    
     }
     
 }

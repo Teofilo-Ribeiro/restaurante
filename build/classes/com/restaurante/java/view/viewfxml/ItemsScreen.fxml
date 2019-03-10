@@ -5,6 +5,7 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -12,6 +13,7 @@
   <content>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="598.0" prefWidth="996.0">
          <children>
+            <TextField fx:id="tfDescription" layoutX="106.0" layoutY="86.0" onKeyTyped="#onDescriptionChanged" prefHeight="26.0" prefWidth="565.0" promptText="Digite o Item" />
             <Button fx:id="btRegister" layoutX="847.0" layoutY="210.0" mnemonicParsing="false" onAction="#onRegistration" prefHeight="37.0" prefWidth="135.0" text="Cadastrar" />
             <Button fx:id="btAlter" layoutX="847.0" layoutY="262.0" mnemonicParsing="false" onAction="#onAlteration" prefHeight="37.0" prefWidth="135.0" text="Alterar" />
             <Button fx:id="btDelete" layoutX="847.0" layoutY="314.0" mnemonicParsing="false" onAction="#onDelete" prefHeight="37.0" prefWidth="135.0" text="Excluir" />
@@ -21,17 +23,14 @@
                   <Font name="KacstDigital" size="40.0" />
                </font>
             </Label>
-            <ScrollPane layoutX="27.0" layoutY="121.0" pannable="true" prefHeight="459.0" prefWidth="800.0">
-               <content>
-                  <TableView fx:id="tvItems" prefHeight="457.0" prefWidth="796.0">
-                    <columns>
-                      <TableColumn fx:id="tcID" prefWidth="75.0" text="ID" />
-                      <TableColumn fx:id="tcDescription" prefWidth="567.0" text="DESCRICAO" />
-                        <TableColumn fx:id="tcPrice" prefWidth="152.0" text="PREÇO" />
-                    </columns>
-                  </TableView>
-               </content>
-            </ScrollPane>
+            <TableView fx:id="tvItems" layoutX="14.0" layoutY="120.0" prefHeight="471.0" prefWidth="823.0">
+               <columns>
+                  <TableColumn fx:id="tcID" prefWidth="75.0" text="ID" />
+                  <TableColumn fx:id="tcDescription" prefWidth="554.0" text="DESCRICAO" />
+                  <TableColumn fx:id="tcPrice" prefWidth="92.0" text="PREÇO" />
+                  <TableColumn fx:id="tcAdd" prefWidth="71.0" />
+               </columns>
+            </TableView>
          </children></AnchorPane>
   </content>
 </ScrollPane>
