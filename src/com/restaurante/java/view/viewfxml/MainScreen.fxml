@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -7,10 +9,13 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.paint.RadialGradient?>
 <?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.restaurante.java.view.MainScreenController">
    <children>
@@ -39,7 +44,7 @@
           </Menu>
         </menus>
       </MenuBar>
-      <GridPane fx:id="grTables" layoutX="-1.0" layoutY="40.0" prefHeight="1041.0" prefWidth="1919.0">
+      <GridPane fx:id="grTables" layoutX="3.0" layoutY="40.0" prefHeight="917.0" prefWidth="1915.0">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -79,6 +84,55 @@
                <stops>
                   <Stop color="#070606" />
                   <Stop color="#867a7a" offset="1.0" />
+               </stops>
+            </RadialGradient>
+         </stroke>
+      </Line>
+      <HBox layoutX="86.0" layoutY="972.0" prefHeight="35.0" prefWidth="1837.0">
+         <children>
+            <Circle fill="GREEN" radius="15.0" stroke="BLACK" strokeType="INSIDE" />
+            <Label text="LIVRE">
+               <font>
+                  <Font name="System Bold Italic" size="23.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </Label>
+            <Circle fill="#ff1f1f" radius="15.0" stroke="BLACK" strokeType="INSIDE">
+               <HBox.margin>
+                  <Insets left="30.0" />
+               </HBox.margin>
+            </Circle>
+            <Label text="OCUPADA">
+               <font>
+                  <Font name="System Bold Italic" size="23.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </Label>
+            <Circle fill="#9a9897" radius="15.0" stroke="BLACK" strokeType="INSIDE">
+               <HBox.margin>
+                  <Insets left="30.0" />
+               </HBox.margin>
+            </Circle>
+            <Label text="RESERVADA">
+               <font>
+                  <Font name="System Bold Italic" size="23.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </Label>
+         </children>
+      </HBox>
+      <Line endX="1763.878662109375" endY="1.0" layoutX="139.0" layoutY="956.0" startX="-129.4546661376953" startY="1.0" strokeMiterLimit="30.0">
+         <stroke>
+            <RadialGradient centerX="0.42696629213483145" centerY="0.5" radius="0.5">
+               <stops>
+                  <Stop color="#070606" />
+                  <Stop color="#857a7a7d" offset="1.0" />
                </stops>
             </RadialGradient>
          </stroke>

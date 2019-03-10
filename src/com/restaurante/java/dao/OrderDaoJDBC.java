@@ -36,10 +36,11 @@ public class OrderDaoJDBC implements OrderDao{
         PreparedStatement stmt = null;
         ResultSet rs = null;   
         try {
-            stmt = con.prepareStatement("INSERT INTO PEDIDOS(COD_ITEM, N_COMANDA, OBS)VALUES(?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+            stmt = con.prepareStatement("INSERT INTO PEDIDOS(COD_ITEM, N_COMANDA, OBS, QUANTIDADE)VALUES(?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
             stmt.setInt(1,order.getItem().getId());
             stmt.setInt(2, order.getCommandId());
             stmt.setString(3, order.getNote());
+            stmt.setInt(4, order.getQty());
             stmt.executeUpdate();
             rs = stmt.getGeneratedKeys();
             if(rs.next())
@@ -68,7 +69,7 @@ public class OrderDaoJDBC implements OrderDao{
 "                                        FROM PEDIDOS INNER JOIN COMANDAS " +
 "                                        ON PEDIDOS.N_COMANDA = COMANDAS.N_COMANDA " +
 "                                        INNER JOIN ITENS " +
-"                                        ON ITENS.COD_ITEM = PEDIDOS.COD_ITEM;");
+"                                        ON ITENS.COD_ITEM = PEDIDOS.COD_ITEM");
             rs=stmt.executeQuery();
             
             while(rs.next()){
@@ -99,7 +100,14 @@ public class OrderDaoJDBC implements OrderDao{
         Order order = null; 
         
         try {
-            stmt= con.prepareStatement("SELECT * FROM PEDIDOS WHERE COD_PEDIDO = ?");
+            stmt = con.prepareStatement("SELECT PEDIDOS.*, " +
+"                                        COMANDAS.ABERTA AS COMANDA_ABERTA, COMANDAS.NOME_CLIENTE, COMANDAS.COD_MESA, " +
+"                                        ITENS.DESCRICAO, ITENS.PRECO " +
+"                                        FROM PEDIDOS INNER JOIN COMANDAS " +
+"                                        ON PEDIDOS.N_COMANDA = COMANDAS.N_COMANDA " +
+"                                        INNER JOIN ITENS " +
+"                                        ON ITENS.COD_ITEM = PEDIDOS.COD_ITEM "+
+"                                        WHERE PEDIDOS.COD_PEDIDO = ?");
             stmt.setInt(1, id);
             rs=stmt.executeQuery();
             if(rs.next()){
@@ -123,6 +131,46 @@ public class OrderDaoJDBC implements OrderDao{
         return order;
         
     }
+    @Override
+    public List <Order> findByCommand(int commandId)throws DbException{
+        //Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        Order order = null; 
+        List<Order> orders = new ArrayList<>();
+        try {
+            stmt = con.prepareStatement("SELECT PEDIDOS.*, " +
+"                                        COMANDAS.ABERTA AS COMANDA_ABERTA, COMANDAS.NOME_CLIENTE, COMANDAS.COD_MESA, " +
+"                                        ITENS.DESCRICAO, ITENS.PRECO " +
+"                                        FROM PEDIDOS INNER JOIN COMANDAS " +
+"                                        ON PEDIDOS.N_COMANDA = COMANDAS.N_COMANDA " +
+"                                        INNER JOIN ITENS " +
+"                                        ON ITENS.COD_ITEM = PEDIDOS.COD_ITEM "+
+"                                        WHERE PEDIDOS.N_COMANDA= ?");
+            stmt.setInt(1, commandId);
+            rs=stmt.executeQuery();
+            while(rs.next()){
+                Item item = new Item();
+                item.setId(rs.getInt("COD_ITEM"));
+                item.setDescription(rs.getString("DESCRICAO"));
+                item.setPrice(rs.getFloat("PRECO"));                
+                                
+                order = new Order(rs.getInt("COD_PEDIDO"),null, null, rs.getString("OBS"),item,rs.getInt("QUANTIDADE"),rs.getInt("N_COMANDA"),rs.getInt("COD_MESA"));                
+                orders.add(order);
+            }
+        } catch (SQLException ex) {
+            throw new DbException ("ERRO AO BUSCAR PEDIDO: " + ex.getMessage());
+            
+        }
+        finally{
+            ConnectionFactory.closeConnetion(null, stmt, rs);
+        }
+        
+        
+        return orders;
+        
+    }
+    
   
     @Override
     public List<Order> findAllNotDone()throws DbException{

@@ -31,8 +31,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class OrderConfirmationScreenController implements Initializable{
-    private Stage stage;
-    private Scene scene;
+    private static Stage stage;
+    private static Scene scene;
 
     @FXML
     private Label lbItemDescription;
@@ -61,6 +61,7 @@ public class OrderConfirmationScreenController implements Initializable{
             order.setQty (Integer.parseInt(tfQty.getText()));
             order.setTableId(tableId);
             orderReg.register(order);
+            this.close();
             
         } catch (DbException ex) {
             Logger.getLogger(OrderConfirmationScreenController.class.getName()).log(Level.SEVERE, null, ex);
@@ -83,6 +84,9 @@ public class OrderConfirmationScreenController implements Initializable{
             stage.close();
         }
 
+    }
+    public void close(){
+        stage.close();
     }
 
     @Override

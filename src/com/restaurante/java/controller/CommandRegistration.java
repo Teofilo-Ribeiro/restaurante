@@ -7,8 +7,12 @@ package com.restaurante.java.controller;
 
 import com.restaurante.java.exception.DbException;
 import com.restaurante.java.factory.CommandDaoFactory;
+import com.restaurante.java.factory.OrderDaoFactory;
 import com.restaurante.java.interfaces.CommandDao;
+import com.restaurante.java.interfaces.OrderDao;
 import com.restaurante.java.model.Command;
+import com.restaurante.java.model.Order;
+import java.util.List;
 
 /**
  *
@@ -16,9 +20,14 @@ import com.restaurante.java.model.Command;
  */
 public class CommandRegistration {
     CommandDao commandDao;
+    OrderRegistration orderReg;
+    
+    OrderDao orderDao;
 
     public CommandRegistration() throws DbException {
-        this.commandDao = CommandDaoFactory.createItemDao();
+        this.commandDao = CommandDaoFactory.createCommandDao();
+        this.orderDao= OrderDaoFactory.createOrderDao();
+        orderReg= new OrderRegistration();
     }
     public Command getCommand(int tableNumber)throws DbException{
         Command command = commandDao.findCommandOpen(tableNumber);
@@ -31,5 +40,16 @@ public class CommandRegistration {
         Command command = new Command(tableNumber);
         commandDao.create(command);
         return command;
+    }
+    public Command findById(int id) throws DbException{
+        
+        Command command = commandDao.findById(id);
+        command.setOrders(orderDao.findByCommand(id));
+        return command;    
+    }
+    public void closeCommand(int tableId) throws DbException{
+       Command command = getCommand(tableId);
+       command.setIsOpen(false);
+       commandDao.update(command);
     }
 }

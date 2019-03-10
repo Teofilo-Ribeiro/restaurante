@@ -20,4 +20,5 @@ public interface OrderDao {
     public void update(Order order)throws DbException;
     public void delete (Order order)throws DbException;
     public List<Order> findAllNotDone()throws DbException;
+    public List <Order> findByCommand(int id)throws DbException;
 }

@@ -65,7 +65,7 @@ public class MainScreenController implements Initializable {
         int gridH = 0, gridV =0;
        
         for(Table table : tables ){
-            tableButtons[i] = new ButtonTable(Integer.toString(table.getId()),table.getStatus(),this::openTable, this::closeTable, this::bookTable, this::status,this::novoPedido);
+            tableButtons[i] = new ButtonTable(Integer.toString(table.getId()),table.getStatus(),this::openTable, this::closeTable, this::bookTable, this::status,this::newOrder);
             grTables.add(tableButtons[i],gridV,gridH);
             GridPane.setHalignment(tableButtons[i], HPos.CENTER);
             GridPane.setValignment(tableButtons[i], VPos.CENTER);
@@ -120,6 +120,12 @@ public class MainScreenController implements Initializable {
     public void closeTable(ActionEvent e){
         try {
             //fachar a comanda e abrir tela de pagamento
+            
+            CloseCommandScreenController closeCommandSc = new CloseCommandScreenController();
+            closeCommandSc.start(stage,parseId(e));
+            
+            
+            
             TableRegistration tabReg = new TableRegistration();
             tableButtons[parseId(e)-1].setCircleStatus(TableStatus.LIVRE);
             Table table = tables.get(parseId(e)-1);
@@ -142,9 +148,19 @@ public class MainScreenController implements Initializable {
             Alerts.showAlert("ERRO!", null, ex.getMessage(), Alert.AlertType.ERROR);
         }
     }
-    public void novoPedido(ActionEvent e){
-        ItemsScreenController itemSc = new ItemsScreenController();
-        itemSc.start(stage,parseId(e));
+    public void newOrder(ActionEvent e){
+        try {
+            TableRegistration tabReg = new TableRegistration();
+            ItemsScreenController itemSc = new ItemsScreenController();
+            itemSc.start(stage,parseId(e));
+            Table table = tables.get(parseId(e)-1);
+            tableButtons[parseId(e)-1].setCircleStatus(TableStatus.OCUPADA); // -1 pois o id da mesa começa em 1;
+            table.setStatus(TableStatus.OCUPADA);
+            tabReg.updateStatus(table);
+        } catch (DbException ex) {
+            Alerts.showAlert("ERRO!", null, ex.getMessage(), Alert.AlertType.ERROR);
+        }
+        
     }
     public void status(ActionEvent e){
     

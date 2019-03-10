@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="407.0" prefWidth="896.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.restaurante.java.view.CloseCommandScreenController">
+   <children>
+      <TableView fx:id="tvOrders" layoutX="18.0" layoutY="46.0" prefHeight="347.0" prefWidth="528.0">
+        <columns>
+          <TableColumn fx:id="tcItems" prefWidth="356.0" text="ITEM" />
+            <TableColumn fx:id="tcQty" prefWidth="69.0" text="QTD" />
+          <TableColumn fx:id="tcPrice" prefWidth="100.0" text=" PREÇO UN" />
+        </columns>
+      </TableView>
+      <Label layoutX="561.0" layoutY="110.0" text="TOTAL A PAGAR: RS">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Button fx:id="btPay" layoutX="570.0" layoutY="269.0" mnemonicParsing="false" onAction="#onPay" prefHeight="51.0" prefWidth="308.0" text="PAGAR" />
+      <Label layoutX="616.0" layoutY="140.0" text="QTD ITENS:">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbTotal" layoutX="771.0" layoutY="110.0" prefHeight="0.0" prefWidth="116.0" text="VALOR" textFill="#bc1717" underline="true">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbQtyItems" layoutX="739.0" layoutY="140.0" prefHeight="0.0" prefWidth="116.0" text="VALOR" textFill="#bc1717" underline="true">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

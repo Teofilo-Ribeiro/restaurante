@@ -12,6 +12,7 @@ import java.util.ResourceBundle;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -28,8 +29,8 @@ import javafx.stage.Stage;
 
 public class ItemsScreenController implements Initializable, DataChangeListener {
 
-    private Stage stage;
-    private Scene scene;
+    private static Stage stage;
+    private static Scene scene;
 
     @FXML
     private Button btRegister;
@@ -61,7 +62,9 @@ public class ItemsScreenController implements Initializable, DataChangeListener 
     @FXML
     private TableColumn <Item, Item>tcAdd;
     
-    private static Boolean setAddButtonsOn = false;
+   
+    
+    private static Boolean setAddButtonsOn;
 
     private ItemRegistration itemReg;
     
@@ -129,7 +132,9 @@ public class ItemsScreenController implements Initializable, DataChangeListener 
 
     public void start(Stage owner) {
         try {
-            
+            if(setAddButtonsOn == null){
+                setAddButtonsOn= false;
+            }
             stage = new Stage();
             Parent fxmlPrincipal = FXMLLoader.load(getClass().getResource("viewfxml/ItemsScreen.fxml"));
             scene = new Scene(fxmlPrincipal);
@@ -137,6 +142,7 @@ public class ItemsScreenController implements Initializable, DataChangeListener 
             stage.setTitle("Itens");
             stage.initOwner(owner);
             stage.show();
+            stage.setOnCloseRequest(this::close);
         } catch (IOException ex) {
             Alerts.showAlert("ERRO", null, "Erro ao abrir tela de Itens!\n" + ex.getMessage(), Alert.AlertType.ERROR);
             stage.close();
@@ -169,8 +175,11 @@ public class ItemsScreenController implements Initializable, DataChangeListener 
         itemVeriRegSc.start(stage, null, VerifyItemRegScreenController.ScreenType.DELETE);
     }
 
-    public void close() {
+    public void close(Event event) {
         stage.close();
+        stage = null;
+        scene=null;
+        setAddButtonsOn = null;
     }
 
     @Override

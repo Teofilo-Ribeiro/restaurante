@@ -17,9 +17,10 @@ import java.util.List;
  */
 public class OrderRegistration {
     OrderDao orderDao;
-
+    
     public OrderRegistration() throws DbException {
         this.orderDao = OrderDaoFactory.createOrderDao();
+        
     }
     public void register (Order order) throws DbException{
         CommandRegistration commandReg= new CommandRegistration();
@@ -38,5 +39,9 @@ public class OrderRegistration {
     public void update(Order order) throws DbException{
         orderDao.update(order);
     }
+    public List<Order> findByCommand(int commandId) throws DbException{
+        return orderDao.findByCommand(commandId);
+    }
+    
     
 }

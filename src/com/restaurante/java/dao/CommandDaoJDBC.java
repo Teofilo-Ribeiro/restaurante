@@ -9,13 +9,17 @@ import com.restaurante.java.connection.ConnectionFactory;
 import com.restaurante.java.exception.DbException;
 import com.restaurante.java.interfaces.CommandDao;
 import com.restaurante.java.model.Command;
+import com.restaurante.java.model.Item;
+import com.restaurante.java.model.Order;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -54,22 +58,53 @@ public class CommandDaoJDBC implements CommandDao {
         
         PreparedStatement stmt = null;
         ResultSet rs = null;
+        Boolean newCommand = false;
         
         List<Command> commands = new ArrayList<>();
         
         try {
-            stmt = con.prepareStatement("SELECT * FROM COMANDAS");
+            stmt = con.prepareStatement("SELECT PEDIDOS.*, " +
+"                                        COMANDAS.ABERTA AS COMANDA_ABERTA, COMANDAS.NOME_CLIENTE, COMANDAS.COD_MESA, " +
+"                                        ITENS.DESCRICAO, ITENS.PRECO " +
+"                                        FROM PEDIDOS INNER JOIN COMANDAS " +
+"                                        ON PEDIDOS.N_COMANDA = COMANDAS.N_COMANDA " +
+"                                        INNER JOIN ITENS " +
+"                                        ON ITENS.COD_ITEM = PEDIDOS.COD_ITEM;");
             rs=stmt.executeQuery();
             
-            while(rs.next()){
-                Command command = new Command();
-                command.setId(rs.getInt("N_COMANDA"));
-                //command.setDateHour(rs.getDate(""));
-                command.setIsOpen(rs.getBoolean("ABERTA"));
-                //command.setStaff(rs.getString(""));
-                command.setTable(rs.getInt("COD_MESA"));
-                commands.add(command);
+            Map<Integer, Command> map = new HashMap<>();
             
+            
+            
+            while(rs.next()){
+                
+                Command command = map.get(rs.getInt("N_COMANDA"));
+                
+                if (command == null){
+                    command = new Command();
+                    command.setId(rs.getInt("N_COMANDA"));
+                    command.setIsOpen(rs.getBoolean("COMANDA_ABERTA"));
+                    command.setTable(rs.getInt("COD_MESA"));
+                    //command.setDateHour(rs.getDate(""));
+                    //command.setStaff(rs.getString(""));                    
+                    map.put(rs.getInt("N_COMANDA"), command);
+                    newCommand =true;
+                }
+                
+                Item item = new Item();
+                item.setId(rs.getInt("COD_ITEM"));
+                item.setDescription(rs.getString("DESCRICAO"));
+                item.setPrice(rs.getFloat("PRECO"));                
+                                
+                Order order = new Order(rs.getInt("COD_PEDIDO"),null, null, rs.getString("OBS"),item,rs.getInt("QUANTIDADE"),rs.getInt("N_COMANDA"),rs.getInt("COD_MESA")); 
+                command.addOrder(order);
+                
+                
+                if (newCommand){
+                    commands.add(command);
+                    newCommand = false;
+                }
+                
             }
         } catch (SQLException ex) {
             throw new DbException ("ERRO AO BUSCAR COMANDA " + ex.getMessage());
@@ -80,8 +115,7 @@ public class CommandDaoJDBC implements CommandDao {
         return commands;
     }
     @Override
-    public Command findById(int id)throws DbException{
-        //Connection con = ConnectionFactory.getConnection();
+    public Command findById(int id)throws DbException{        
         PreparedStatement stmt = null;
         ResultSet rs = null;
         Command command = null; 
@@ -92,11 +126,13 @@ public class CommandDaoJDBC implements CommandDao {
             rs=stmt.executeQuery();
             if(rs.next()){
                 command = new Command();
-                 command.setId(rs.getInt("N_COMANDA"));
+                command.setId(rs.getInt("N_COMANDA"));
                 //command.setDateHour(rs.getDate(""));
                 command.setIsOpen(rs.getBoolean("ABERTA"));
                 //command.setStaff(rs.getString(""));
                 command.setTable(rs.getInt("COD_MESA"));
+                
+                
             }
         } catch (SQLException ex) {
             throw new DbException ("ERRO AO BUSCAR COMANDA: " + ex.getMessage());
@@ -119,16 +155,43 @@ public class CommandDaoJDBC implements CommandDao {
         Command command = null; 
         
         try {
-            stmt= con.prepareStatement("SELECT * FROM COMANDAS WHERE COD_MESA = ? AND ABERTA = TRUE");
+            //stmt= con.prepareStatement("SELECT * FROM COMANDAS WHERE COD_MESA = ? AND ABERTA = TRUE");
+            stmt = con.prepareStatement("SELECT PEDIDOS.*, " +
+"                                        COMANDAS.ABERTA AS COMANDA_ABERTA, COMANDAS.NOME_CLIENTE, COMANDAS.COD_MESA, " +
+"                                        ITENS.DESCRICAO, ITENS.PRECO " +
+"                                        FROM PEDIDOS INNER JOIN COMANDAS " +
+"                                        ON PEDIDOS.N_COMANDA = COMANDAS.N_COMANDA " +
+"                                        INNER JOIN ITENS " +
+"                                        ON ITENS.COD_ITEM = PEDIDOS.COD_ITEM "+
+"                                        WHERE COMANDAS.COD_MESA = ? AND COMANDAS.ABERTA = TRUE");
+            
             stmt.setInt(1, tableId);
             rs=stmt.executeQuery();
-            if(rs.next()){
-                command = new Command();
+            while(rs.next()){
+                /*command = new Command();
                  command.setId(rs.getInt("N_COMANDA"));
                 //command.setDateHour(rs.getDate(""));
                 command.setIsOpen(rs.getBoolean("ABERTA"));
                 //command.setStaff(rs.getString(""));
-                command.setTable(rs.getInt("COD_MESA"));
+                command.setTable(rs.getInt("COD_MESA"));*/
+                
+                if (command == null){
+                    command = new Command();
+                    command.setId(rs.getInt("N_COMANDA"));
+                    command.setIsOpen(rs.getBoolean("COMANDA_ABERTA"));
+                    command.setTable(rs.getInt("COD_MESA"));
+                    //command.setDateHour(rs.getDate(""));
+                    //command.setStaff(rs.getString(""));                    
+                    
+                }
+                
+                Item item = new Item();
+                item.setId(rs.getInt("COD_ITEM"));
+                item.setDescription(rs.getString("DESCRICAO"));
+                item.setPrice(rs.getFloat("PRECO"));                
+                                
+                Order order = new Order(rs.getInt("COD_PEDIDO"),null, null, rs.getString("OBS"),item,rs.getInt("QUANTIDADE"),rs.getInt("N_COMANDA"),rs.getInt("COD_MESA")); 
+                command.addOrder(order);
             }
         } catch (SQLException ex) {
             throw new DbException ("ERRO AO BUSCAR COMANDA: " + ex.getMessage());

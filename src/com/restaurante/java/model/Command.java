@@ -5,7 +5,9 @@
  */
 package com.restaurante.java.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -17,15 +19,20 @@ public class Command {
     private Staff staff;    //who close
     private Boolean isOpen;
     private int table;
+    private List <Order> orders;
+    
 
-    public Command(){}
+    public Command(){
+        orders = new ArrayList();
+    }
 
    
     
     
-    public Command(int table) {
+    public Command(int table) {        
         this.dateHour = dateHour;
         this.table = table;
+        orders = new ArrayList();
     }
     
     public int getTable() {
@@ -69,7 +76,31 @@ public class Command {
     public void setIsOpen(Boolean isOpen) {
         this.isOpen = isOpen;
     }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
     
-    
+    public void addOrder(Order order){
+        orders.add(order);
+    }
+    public float getTotal(){
+        float total=0;
+        for (Order order: orders){
+            total += order.getItem().getPrice();
+        }
+        return total;
+    }
+    public int getTotalItems(){
+        int total = 0;
+        for (Order order:orders){
+            total+= order.getQty();
+        }
+        return total;
+    }   
     
 }

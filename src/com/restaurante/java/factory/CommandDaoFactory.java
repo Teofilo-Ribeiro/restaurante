@@ -15,7 +15,7 @@ import com.restaurante.java.interfaces.CommandDao;
  * @author teo
  */
 public class CommandDaoFactory {
-    public static CommandDao createItemDao()throws DbException{
+    public static CommandDao createCommandDao()throws DbException{
         return new CommandDaoJDBC();
     }
 }

@@ -15,8 +15,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import com.restaurante.java.interfaces.TableDao;
 
 /**
@@ -37,7 +35,6 @@ public class TableDaoJDBC implements TableDao{
             stmt.setString(1,table.getStatus().name());
             stmt.setDouble(2, table.getId());
             stmt.executeUpdate();
-            System.out.println("Update realizado com sucesso!");
         }catch (SQLException ex) {
             throw new DbException("Erro ao salvar! "+ ex.getMessage());
             
