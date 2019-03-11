@@ -5,10 +5,8 @@
  */
 package com.restaurante.java.restaurante;
 
-import com.restaurante.java.model.Item;
-import com.restaurante.java.dao.ItemDaoJDBC;
 import com.restaurante.java.view.MainScreenController;
-import com.restaurante.java.view.VerifyItemRegScreenController;
+
 
 /**
  *
@@ -19,14 +17,7 @@ public class Restaurante {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-        /*Prato p = new Prato();
-        PratoDAO dao = new PratoDAO();
-        p.setDescricao("Pizza de Frango");
-        p.setPreco(27.00);
-        dao.create(p);
-        System.out.println("Fim Do programa!");
-       */
+    public static void main(String[] args) {        
         MainScreenController tp = new MainScreenController();
         tp.start();
     }
