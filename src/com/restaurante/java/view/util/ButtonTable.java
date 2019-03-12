@@ -58,7 +58,7 @@ public class ButtonTable extends MenuButton {
         
         super.getItems().addAll(this.open,this.close,this.book,this.tableStatus,this.newOrder);
         super.setGraphic(this.circleStatus);
-        super.setMinSize(142, 68);
+        super.setMinSize(142, 60);
         super.setId(tableCode);       
     }
         

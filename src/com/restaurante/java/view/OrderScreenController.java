@@ -5,20 +5,15 @@
  */
 package com.restaurante.java.view;
 
-import com.restaurante.java.controller.ItemRegistration;
 import com.restaurante.java.controller.OrderRegistration;
 import com.restaurante.java.exception.DbException;
-import com.restaurante.java.model.Item;
 import com.restaurante.java.model.Order;
 import com.restaurante.java.view.util.Alerts;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -30,11 +25,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 
 /**
  * FXML Controller class
@@ -57,6 +50,8 @@ public class OrderScreenController implements Initializable {
     @FXML
     private TableColumn<Order, Order> tcDone;
 
+    @FXML
+    private TableColumn<Order, Integer> tcTableId;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         loadTableData();
@@ -81,7 +76,7 @@ public class OrderScreenController implements Initializable {
     
     private void loadTableData() {
         tcItem.setCellValueFactory(new PropertyValueFactory<>("item"));
-        
+        tcTableId.setCellValueFactory(new PropertyValueFactory<>("tableId")); 
         tcOrderId.setCellValueFactory(new PropertyValueFactory<>("id")); 
         tcDone.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));      
         

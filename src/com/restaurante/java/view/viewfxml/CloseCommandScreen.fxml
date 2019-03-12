@@ -11,9 +11,8 @@
    <children>
       <TableView fx:id="tvOrders" layoutX="18.0" layoutY="46.0" prefHeight="347.0" prefWidth="528.0">
         <columns>
-          <TableColumn fx:id="tcItems" prefWidth="356.0" text="ITEM" />
-            <TableColumn fx:id="tcQty" prefWidth="69.0" text="QTD" />
-          <TableColumn fx:id="tcPrice" prefWidth="100.0" text=" PREÇO UN" />
+          <TableColumn fx:id="tcItems" prefWidth="461.0" text="ITEM" />
+            <TableColumn fx:id="tcQty" prefWidth="64.0" text="QTD" />
         </columns>
       </TableView>
       <Label layoutX="561.0" layoutY="110.0" text="TOTAL A PAGAR: RS">

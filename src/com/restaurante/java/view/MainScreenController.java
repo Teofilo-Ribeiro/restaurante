@@ -13,13 +13,10 @@ import com.restaurante.java.model.enums.TableStatus;
 import com.restaurante.java.view.util.ButtonTable;
 import static com.restaurante.java.view.util.ButtonTable.parseId;
 import com.restaurante.java.view.util.Alerts;
-import com.restaurante.java.view.util.Utils;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -69,8 +66,9 @@ public class MainScreenController implements Initializable {
             grTables.add(tableButtons[i],gridV,gridH);
             GridPane.setHalignment(tableButtons[i], HPos.CENTER);
             GridPane.setValignment(tableButtons[i], VPos.CENTER);
-            if(gridV>12){
+            if(gridV>11){
                 gridV = 0;
+                gridH++;
             }
             else{
                 gridV++;

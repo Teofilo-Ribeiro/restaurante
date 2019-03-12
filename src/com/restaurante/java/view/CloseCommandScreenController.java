@@ -6,7 +6,6 @@
 package com.restaurante.java.view;
 
 import com.restaurante.java.controller.CommandRegistration;
-import com.restaurante.java.controller.OrderRegistration;
 import com.restaurante.java.exception.DbException;
 import com.restaurante.java.model.Command;
 import com.restaurante.java.model.Item;
@@ -16,9 +15,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -30,7 +26,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -105,8 +100,7 @@ public class CloseCommandScreenController implements Initializable {
     }
     private void loadTableData() {
        
-        tcItems.setCellValueFactory(new PropertyValueFactory<>("item"));
-        tcPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
+        tcItems.setCellValueFactory(new PropertyValueFactory<>("item"));        
         tcQty.setCellValueFactory(new PropertyValueFactory<>("qty"));
         tvOrders.setItems(tableData()); 
 
@@ -132,6 +126,7 @@ public class CloseCommandScreenController implements Initializable {
         try {
             CommandRegistration commandReg = new CommandRegistration();
             commandReg.closeCommand(tableId);
+            stage.close();
         } catch (DbException ex) {
             Alerts.showAlert("ERRO!", null, ex.getMessage(), Alert.AlertType.ERROR);
         }

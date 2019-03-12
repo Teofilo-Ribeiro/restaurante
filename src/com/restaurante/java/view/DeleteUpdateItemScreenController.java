@@ -35,7 +35,7 @@ import javafx.stage.Stage;
  *
  * @author teo
  */
-public  class VerifyItemRegScreenController implements Initializable{
+public  class DeleteUpdateItemScreenController implements Initializable{
     private static List <DataChangeListener> dataChangeListeners= new ArrayList<>();
        
     @FXML
@@ -77,7 +77,7 @@ public  class VerifyItemRegScreenController implements Initializable{
     
     ItemRegistration itemReg;
     
-     public VerifyItemRegScreenController(){
+     public DeleteUpdateItemScreenController(){
         try {
             this.itemReg = new ItemRegistration();
         } catch (DbException ex) {

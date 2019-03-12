@@ -64,7 +64,7 @@ public class ItemsScreenController implements Initializable, DataChangeListener 
     
    
     
-    private static Boolean setAddButtonsOn;
+    private static Boolean isNewOrderScreen;
 
     private ItemRegistration itemReg;
     
@@ -81,6 +81,11 @@ public class ItemsScreenController implements Initializable, DataChangeListener 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         loadTableData();
+        if(isNewOrderScreen){
+            btRegister.setVisible(false);
+            btAlter.setVisible(false);
+            btDelete.setVisible(false);
+        }
     }
 
     private void loadTableData() {
@@ -102,7 +107,7 @@ public class ItemsScreenController implements Initializable, DataChangeListener 
                 }
 
                 setGraphic(button);
-                if(setAddButtonsOn!=true){
+                if(isNewOrderScreen!=true){
                     button.setVisible(false);
                 }
                 button.setOnAction(
@@ -132,8 +137,8 @@ public class ItemsScreenController implements Initializable, DataChangeListener 
 
     public void start(Stage owner) {
         try {
-            if(setAddButtonsOn == null){
-                setAddButtonsOn= false;
+            if(isNewOrderScreen == null){
+                isNewOrderScreen= false;
             }
             stage = new Stage();
             Parent fxmlPrincipal = FXMLLoader.load(getClass().getResource("viewfxml/ItemsScreen.fxml"));
@@ -151,7 +156,7 @@ public class ItemsScreenController implements Initializable, DataChangeListener 
     }
     
     public void start(Stage owner, int table){
-        setAddButtonsOn = true;
+        isNewOrderScreen = true;
         tableNumber = table;
         this.start(stage);
         
@@ -164,22 +169,22 @@ public class ItemsScreenController implements Initializable, DataChangeListener 
     }
 
     public void onAlteration() {
-        VerifyItemRegScreenController itemVeriRegSc = new VerifyItemRegScreenController();
+        DeleteUpdateItemScreenController itemVeriRegSc = new DeleteUpdateItemScreenController();
         itemVeriRegSc.subscribeDataChangeListener(this);
-        itemVeriRegSc.start(stage, null, VerifyItemRegScreenController.ScreenType.UPDATE);
+        itemVeriRegSc.start(stage, null, DeleteUpdateItemScreenController.ScreenType.UPDATE);
     }
 
     public void onDelete() {
-        VerifyItemRegScreenController itemVeriRegSc = new VerifyItemRegScreenController();
+        DeleteUpdateItemScreenController itemVeriRegSc = new DeleteUpdateItemScreenController();
         itemVeriRegSc.subscribeDataChangeListener(this);
-        itemVeriRegSc.start(stage, null, VerifyItemRegScreenController.ScreenType.DELETE);
+        itemVeriRegSc.start(stage, null, DeleteUpdateItemScreenController.ScreenType.DELETE);
     }
 
     public void close(Event event) {
         stage.close();
         stage = null;
         scene=null;
-        setAddButtonsOn = null;
+        isNewOrderScreen = null;
     }
 
     @Override
